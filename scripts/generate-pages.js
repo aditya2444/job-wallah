@@ -1,0 +1,608 @@
+// Script to generate the 15 dedicated sample pages for Job Wallah
+const fs = require('fs');
+const path = require('path');
+
+const pagesConfig = [
+  // --- Internships by Places ---
+  {
+    filename: 'internships-work-from-home.html',
+    title: 'Work From Home Internships 2026 - Job Wallah',
+    badge: '🏠 REMOTE & WFH OPPORTUNITIES',
+    heroTitle: 'Work From Home Internships',
+    heroSubtitle: 'Earn high stipends while working remotely from anywhere in India. Flexible hours, verified stipends, and certificate + PPO guarantee.',
+    heroImage: 'https://images.unsplash.com/photo-1593642632823-8f785ba67e45?w=600&auto=format&fit=crop&q=80',
+    type: 'Internship',
+    filterKey: 'location',
+    filterVal: 'Work From Home',
+    highlightStats: { count: '2,400+ Openings', avgPay: '₹28,000 /mo', topFirms: 'Razorpay, Zomato, Unacademy' }
+  },
+  {
+    filename: 'internships-delhi-ncr.html',
+    title: 'Internships in Delhi NCR & Gurugram - Job Wallah',
+    badge: '📍 CAPITAL REGION HIRING',
+    heroTitle: 'Internships in Delhi NCR',
+    heroSubtitle: 'Find top corporate and startup internships across Delhi, Gurugram CyberCity, Noida, and Faridabad.',
+    heroImage: 'https://images.unsplash.com/photo-1587474260584-136574528ed5?w=600&auto=format&fit=crop&q=80',
+    type: 'Internship',
+    filterKey: 'location',
+    filterVal: 'Delhi NCR / Gurugram',
+    highlightStats: { count: '1,850+ Openings', avgPay: '₹25,000 /mo', topFirms: 'Zomato, Urban Company, Paytm' }
+  },
+  {
+    filename: 'internships-bengaluru.html',
+    title: 'Internships in Bengaluru - Silicon Valley of India | Job Wallah',
+    badge: '🚀 TECH CAPITAL OF INDIA',
+    heroTitle: 'Internships in Bengaluru',
+    heroSubtitle: 'Launch your tech or product career in Indiranagar, Koramangala, Whitefield, and Electronic City tech parks.',
+    heroImage: 'https://images.unsplash.com/photo-1596176530529-78163a4f7af2?w=600&auto=format&fit=crop&q=80',
+    type: 'Internship',
+    filterKey: 'location',
+    filterVal: 'Bengaluru',
+    highlightStats: { count: '3,200+ Openings', avgPay: '₹35,000 /mo', topFirms: 'CRED, Swiggy, PhonePe, Meesho' }
+  },
+  {
+    filename: 'internships-mumbai.html',
+    title: 'Internships in Mumbai - Finance & Media Hub | Job Wallah',
+    badge: '🌊 FINANCIAL & CREATIVE CAPITAL',
+    heroTitle: 'Internships in Mumbai',
+    heroSubtitle: 'Explore exciting internships in Banking, Creative Media, Fashion, E-commerce, and Fast-Growing Startups in Bandra & BKC.',
+    heroImage: 'https://images.unsplash.com/photo-1570168007204-dfb528c6958f?w=600&auto=format&fit=crop&q=80',
+    type: 'Internship',
+    filterKey: 'location',
+    filterVal: 'Mumbai',
+    highlightStats: { count: '1,450+ Openings', avgPay: '₹26,000 /mo', topFirms: 'boAt Lifestyle, HDFC, Ogilvy' }
+  },
+  {
+    filename: 'internships-hyderabad.html',
+    title: 'Internships in Hyderabad - HITEC City | Job Wallah',
+    badge: '💎 CYBERABAD HIRING SPREE',
+    heroTitle: 'Internships in Hyderabad',
+    heroSubtitle: 'Join global IT powerhouses, pharma innovations, and high-tech software labs across HITEC City and Gachibowli.',
+    heroImage: 'https://images.unsplash.com/photo-1605649487212-47bdab064df7?w=600&auto=format&fit=crop&q=80',
+    type: 'Internship',
+    filterKey: 'location',
+    filterVal: 'Hyderabad',
+    highlightStats: { count: '1,620+ Openings', avgPay: '₹27,000 /mo', topFirms: 'TCS, Infosys, Microsoft India' }
+  },
+
+  // --- Internships by Stream ---
+  {
+    filename: 'internships-web-development.html',
+    title: 'Web Development Internships 2026 - Job Wallah',
+    badge: '💻 CODING & SOFTWARE ENGINEERING',
+    heroTitle: 'Web Development Internships',
+    heroSubtitle: 'Build production React, Node.js, Next.js, and Full Stack applications. Get mentored by senior tech leads with PPO pathways.',
+    heroImage: 'https://images.unsplash.com/photo-1498050108023-c5249f4df085?w=600&auto=format&fit=crop&q=80',
+    type: 'Internship',
+    filterKey: 'category',
+    filterVal: 'Web Development',
+    highlightStats: { count: '2,900+ Openings', avgPay: '₹32,000 /mo', topFirms: 'Razorpay, PhonePe, Startups' }
+  },
+  {
+    filename: 'internships-data-science.html',
+    title: 'Data Science & AI Internships - Job Wallah',
+    badge: '📊 ARTIFICIAL INTELLIGENCE & MACHINE LEARNING',
+    heroTitle: 'Data Science & AI Internships',
+    heroSubtitle: 'Work with real-world Big Data, Python ML models, SQL analytics, and generative AI pipelines with verified companies.',
+    heroImage: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=600&auto=format&fit=crop&q=80',
+    type: 'Internship',
+    filterKey: 'category',
+    filterVal: 'Data Science',
+    highlightStats: { count: '1,500+ Openings', avgPay: '₹35,000 /mo', topFirms: 'Swiggy, MuSigma, Fractal' }
+  },
+  {
+    filename: 'internships-graphic-design.html',
+    title: 'Graphic Design & UI/UX Internships - Job Wallah',
+    badge: '🎨 CREATIVE, FIGMA & 3D DESIGN',
+    heroTitle: 'Graphic Design & UI/UX Internships',
+    heroSubtitle: 'Craft visual identities, user interfaces, social media creatives, and motion graphics for India’s most celebrated brands.',
+    heroImage: 'https://images.unsplash.com/photo-1542744094-3a31f272c490?w=600&auto=format&fit=crop&q=80',
+    type: 'Internship',
+    filterKey: 'category',
+    filterVal: 'Design',
+    highlightStats: { count: '1,200+ Openings', avgPay: '₹25,000 /mo', topFirms: 'CRED, boAt, Swiggy Design' }
+  },
+  {
+    filename: 'internships-digital-marketing.html',
+    title: 'Digital Marketing & Growth Internships - Job Wallah',
+    badge: '🚀 SEO, PERFORMANCE & SOCIAL ADS',
+    heroTitle: 'Digital Marketing Internships',
+    heroSubtitle: 'Scale customer acquisition, manage viral campaigns, and analyze Meta Ads ROAS with high-growth consumer apps.',
+    heroImage: 'https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&auto=format&fit=crop&q=80',
+    type: 'Internship',
+    filterKey: 'category',
+    filterVal: 'Digital Marketing',
+    highlightStats: { count: '1,800+ Openings', avgPay: '₹22,000 /mo', topFirms: 'Zomato, boAt, D2C Brands' }
+  },
+  {
+    filename: 'internships-finance.html',
+    title: 'Finance & Accounting Internships - Job Wallah',
+    badge: '💰 AUDITING, VALUATION & TAXATION',
+    heroTitle: 'Finance & Accounting Internships',
+    heroSubtitle: 'Gain hands-on corporate finance exposure in financial modeling, GST reconciliation, partner payouts, and equity research.',
+    heroImage: 'https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?w=600&auto=format&fit=crop&q=80',
+    type: 'Internship',
+    filterKey: 'category',
+    filterVal: 'Finance',
+    highlightStats: { count: '980+ Openings', avgPay: '₹24,000 /mo', topFirms: 'Urban Company, Deloitte, KPMG' }
+  },
+
+  // --- Jobs by Stream ---
+  {
+    filename: 'jobs-full-time-tech.html',
+    title: 'Full-Time Tech Jobs for Freshers - Job Wallah',
+    badge: '💼 SDE-1 & FULL-TIME DEVELOPER',
+    heroTitle: 'Full-Time Tech Jobs',
+    heroSubtitle: 'Step straight into high-paying Software Engineer (SDE-1), Backend, and Full Stack roles with packages up to ₹18 LPA.',
+    heroImage: 'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=600&auto=format&fit=crop&q=80',
+    type: 'Job',
+    filterKey: 'category',
+    filterVal: 'Web Development',
+    highlightStats: { count: '3,500+ Openings', avgPay: '₹8 - ₹16 LPA', topFirms: 'PhonePe, Razorpay, TCS' }
+  },
+  {
+    filename: 'jobs-associate-product-manager.html',
+    title: 'Associate Product Manager (APM) Jobs - Job Wallah',
+    badge: '🧭 PRODUCT ROADMAPS & STRATEGY',
+    heroTitle: 'Associate Product Manager Jobs',
+    heroSubtitle: 'Own product feature roadmaps, conduct user discovery, and drive core metrics at unicorn consumer tech startups.',
+    heroImage: 'https://images.unsplash.com/photo-1531403009284-440f080d1e12?w=600&auto=format&fit=crop&q=80',
+    type: 'Job',
+    filterKey: 'category',
+    filterVal: 'Product Management',
+    highlightStats: { count: '450+ Openings', avgPay: '₹12 - ₹18 LPA', topFirms: 'Meesho, CRED, Flipkart' }
+  },
+  {
+    filename: 'jobs-sales-business-development.html',
+    title: 'Sales & Business Development Fresher Jobs - Job Wallah',
+    badge: '🎯 REVENUE GROWTH & CLIENT ACQUISITION',
+    heroTitle: 'Sales & BD Associate Jobs',
+    heroSubtitle: 'Launch your high-earning sales and partnership career with uncapped incentives, laptops provided, and rapid leadership tracks.',
+    heroImage: 'https://images.unsplash.com/photo-1556761175-5973dc0f32e7?w=600&auto=format&fit=crop&q=80',
+    type: 'Job',
+    filterKey: 'category',
+    filterVal: 'Sales & BD',
+    highlightStats: { count: '1,900+ Openings', avgPay: '₹6 - ₹10 LPA', topFirms: 'Unacademy, Scaler, SaaS' }
+  },
+  {
+    filename: 'jobs-operations-hr.html',
+    title: 'Operations & HR Trainee Jobs - Job Wallah',
+    badge: '👥 TALENT OPERATIONS & CAMPUS HIRING',
+    heroTitle: 'Operations & HR Trainee Jobs',
+    heroSubtitle: 'Lead candidate management, enterprise recruitment drives, campus liaison, and employee experience operations.',
+    heroImage: 'https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&auto=format&fit=crop&q=80',
+    type: 'Job',
+    filterKey: 'category',
+    filterVal: 'Human Resources',
+    highlightStats: { count: '820+ Openings', avgPay: '₹5 - ₹8 LPA', topFirms: 'Infosys, Wipro, Startups' }
+  },
+  {
+    filename: 'jobs-cyber-security.html',
+    title: 'Cyber Security Trainee Jobs - Job Wallah',
+    badge: '🛡️ SOC, ETHICAL HACKING & VAPT',
+    heroTitle: 'Cyber Security Trainee Jobs',
+    heroSubtitle: 'Defend enterprise infrastructure, monitor SIEM security incidents, and conduct vulnerability assessments with certified teams.',
+    heroImage: 'https://images.unsplash.com/photo-1563986768494-4dee2763ff3f?w=600&auto=format&fit=crop&q=80',
+    type: 'Job',
+    filterKey: 'category',
+    filterVal: 'Cybersecurity',
+    highlightStats: { count: '650+ Openings', avgPay: '₹6 - ₹9 LPA', topFirms: 'TCS Cyber, Wipro, CloudSec' }
+  }
+];
+
+function generateHTML(cfg) {
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>${cfg.title}</title>
+  <meta name="description" content="${cfg.heroSubtitle}" />
+  
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/components.css" />
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-notice-bar">
+    <span class="badge">🔥 Verified Hiring</span>
+    <span><strong>Job Wallah 2026:</strong> Curated ${cfg.heroTitle} with guaranteed stipend and PPO offers!</span>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <button id="hamburger-btn" class="nav-hamburger" aria-label="Open Navigation Menu">
+          <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div class="nav-brand">
+          <a href="index.html">
+            <img src="assets/logo.svg" alt="Job Wallah Logo" />
+          </a>
+        </div>
+      </div>
+
+      <div class="nav-menu">
+        <a href="index.html#jobs-section" class="nav-link ${cfg.type === 'Internship' ? 'active' : ''}">Internships</a>
+        <a href="index.html#jobs-section" class="nav-link ${cfg.type === 'Job' ? 'active' : ''}">Jobs</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="careers.html" class="nav-link">We're Hiring</a>
+        <a href="employer-verification.html" class="nav-link">Verification</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+
+      <div class="nav-actions">
+        <a href="index.html#jobs-section" id="bookmarks-nav-btn" class="btn btn-secondary btn-sm" title="View Saved Openings">
+          <svg style="width: 16px; height: 16px; color: var(--primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+          <span style="font-weight: 600;">Saved</span>
+          <span id="bookmark-count-badge" style="background: var(--primary); color: white; border-radius: 10px; padding: 1px 6px; font-size: 11px; font-weight: 700;">0</span>
+        </a>
+
+        <button id="my-apps-nav-btn" class="btn btn-secondary btn-sm" title="View Applied Status">
+          <svg style="width: 16px; height: 16px; color: #10B981;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span style="font-weight: 600;">Applications</span>
+          <span id="my-apps-count-badge" style="background: #10B981; color: white; border-radius: 10px; padding: 1px 6px; font-size: 11px; font-weight: 700;">0</span>
+        </button>
+
+        <button id="post-job-nav-btn" class="btn btn-employer btn-sm">
+          <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <span>Hire Talent</span>
+        </button>
+
+        <div id="user-profile-area" style="display: flex; gap: 8px;"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer-overlay" id="mobile-drawer-overlay">
+    <div class="mobile-drawer">
+      <div class="drawer-header">
+        <img src="assets/logo.svg" alt="Job Wallah Logo" style="height: 32px;" />
+        <button id="close-drawer-btn" style="color: var(--text-muted); padding: 6px;">
+          <svg style="width: 22px; height: 22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="drawer-nav">
+        <a href="index.html" class="drawer-link">🏠 Home</a>
+        <a href="index.html#jobs-section" class="drawer-link active">💼 Internships &amp; Jobs</a>
+        <a href="about.html" class="drawer-link">📖 About Us</a>
+        <a href="careers.html" class="drawer-link">🚀 We're Hiring</a>
+        <a href="employer-verification.html" class="drawer-link">🛡️ Employer Verification</a>
+        <a href="contact.html" class="drawer-link">✉️ Contact Us</a>
+        <div class="drawer-divider"></div>
+        <div class="drawer-section-title">My Activity</div>
+        <button id="drawer-my-apps-btn" class="drawer-link" style="text-align: left; width: 100%;">📄 My Applications</button>
+        <button id="drawer-post-job-btn" class="drawer-link" style="text-align: left; width: 100%; color: #D97706;">⚡ Post a Job (Recruiters)</button>
+        <div class="drawer-divider"></div>
+        <div class="drawer-section-title">Legal &amp; Trust</div>
+        <a href="terms.html" class="drawer-link">📜 Terms &amp; Conditions</a>
+        <a href="privacy.html" class="drawer-link">🔒 Privacy Policy</a>
+        <div class="drawer-divider"></div>
+        <div style="padding: 12px 14px; text-align: center;">
+          <a href="javascript:void(0)" onclick="window.closeDrawer(); window.openCreatorModal()" class="designer-credit-badge" style="width: 100%; justify-content: center;">
+            <span>⚡ Made by Prince Chaurasiya</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page Hero Banner with Image & Stats -->
+  <header class="page-hero" style="background: linear-gradient(180deg, #FFFFFF 0%, #EEF6FC 100%);">
+    <div class="container">
+      <div style="display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 32px; align-items: center; text-align: left;">
+        <div>
+          <div class="page-hero-badge">
+            <span>${cfg.badge}</span>
+          </div>
+          <h1 class="page-hero-title" style="margin-bottom: 12px;">${cfg.heroTitle}</h1>
+          <p class="page-hero-subtitle" style="margin: 0 0 20px 0;">${cfg.heroSubtitle}</p>
+
+          <!-- Quick Highlight Stat Chips -->
+          <div style="display: flex; gap: 12px; flex-wrap: wrap;">
+            <div style="background: #FFFFFF; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 8px 14px;">
+              <div style="font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Openings</div>
+              <div style="font-size: 15px; font-weight: 800; color: var(--navy);">${cfg.highlightStats.count}</div>
+            </div>
+            <div style="background: #FFFFFF; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 8px 14px;">
+              <div style="font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Average Pay</div>
+              <div style="font-size: 15px; font-weight: 800; color: #0369A1;">${cfg.highlightStats.avgPay}</div>
+            </div>
+            <div style="background: #FFFFFF; border: 1px solid var(--border-color); border-radius: var(--radius-md); padding: 8px 14px;">
+              <div style="font-size: 11px; color: var(--text-muted); font-weight: 700; text-transform: uppercase;">Top Hirers</div>
+              <div style="font-size: 13.5px; font-weight: 700; color: var(--navy);">${cfg.highlightStats.topFirms}</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Hero Graphic Image -->
+        <div style="text-align: right; display: flex; justify-content: flex-end;">
+          <img src="${cfg.heroImage}" alt="${cfg.heroTitle}" style="width: 100%; max-width: 440px; height: 260px; object-fit: cover; border-radius: var(--radius-xl); box-shadow: 0 15px 35px rgba(0, 50, 100, 0.12); border: 2px solid white;" />
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Curated Listings Content -->
+  <main style="padding: 36px 0 60px 0;">
+    <div class="container">
+      <div class="breadcrumb-nav">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <a href="index.html#jobs-section">${cfg.type === 'Internship' ? 'Internships' : 'Jobs'}</a>
+        <span>/</span>
+        <span style="color: var(--navy); font-weight: 600;">${cfg.heroTitle}</span>
+      </div>
+
+      <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px;">
+        <div>
+          <h2 style="font-size: 22px; font-weight: 800; color: var(--navy); margin-bottom: 4px;">Verified Openings (${cfg.heroTitle})</h2>
+          <p style="font-size: 13.5px; color: var(--text-secondary); margin: 0;">Actively hiring with direct recruiter application review.</p>
+        </div>
+        <div style="display: flex; gap: 10px;">
+          <a href="index.html#jobs-section" class="btn btn-outline btn-sm">
+            ← View All Categories
+          </a>
+        </div>
+      </div>
+
+      <!-- Specific Curated Job Cards Container -->
+      <div id="curated-jobs-container" class="job-cards-list"></div>
+
+    </div>
+  </main>
+
+  <!-- Placement Guarantee Callout -->
+  <div class="container">
+    <section class="guarantee-banner" style="margin-bottom: 48px;">
+      <div class="guarantee-content">
+        <h3>Need to build skills before applying?</h3>
+        <p>Job Wallah Placement Guarantee Bootcamps teach you the exact technical stack required for ${cfg.heroTitle} with guaranteed interview calls.</p>
+      </div>
+      <div>
+        <a href="index.html#guarantee-banner" class="btn btn-primary" style="background: var(--secondary); color: #0B2545; font-weight: 800; padding: 12px 24px;">
+          Learn More 🎓
+        </a>
+      </div>
+    </section>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h5>Internships by Places</h5>
+          <ul class="footer-links">
+            <li><a href="internships-work-from-home.html">Work from home</a></li>
+            <li><a href="internships-delhi-ncr.html">Delhi NCR</a></li>
+            <li><a href="internships-bengaluru.html">Bengaluru</a></li>
+            <li><a href="internships-mumbai.html">Mumbai</a></li>
+            <li><a href="internships-hyderabad.html">Hyderabad</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Internships by Stream</h5>
+          <ul class="footer-links">
+            <li><a href="internships-web-development.html">Web Development</a></li>
+            <li><a href="internships-data-science.html">Data Science</a></li>
+            <li><a href="internships-graphic-design.html">Graphic Design</a></li>
+            <li><a href="internships-digital-marketing.html">Digital Marketing</a></li>
+            <li><a href="internships-finance.html">Finance &amp; Accounts</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Jobs by Stream</h5>
+          <ul class="footer-links">
+            <li><a href="jobs-full-time-tech.html">Full-Time Tech Jobs</a></li>
+            <li><a href="jobs-associate-product-manager.html">Associate Product Manager</a></li>
+            <li><a href="jobs-sales-business-development.html">Sales &amp; Business Development</a></li>
+            <li><a href="jobs-operations-hr.html">Operations &amp; HR Trainee</a></li>
+            <li><a href="jobs-cyber-security.html">Cyber Security Trainee</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>About Job Wallah</h5>
+          <ul class="footer-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="careers.html">We're hiring</a></li>
+            <li><a href="employer-verification.html">Employer Verification</a></li>
+            <li><a href="terms.html">Terms &amp; Conditions</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        <div>
+          &copy; 2026 Job Wallah Technologies Pvt. Ltd. All rights reserved.
+        </div>
+        <div>
+          <a href="javascript:void(0)" onclick="window.openCreatorModal()" class="designer-credit-badge" title="Creator of Job Wallah">
+            <svg style="width: 15px; height: 15px;" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/></svg>
+            <span>Designed &amp; Made by Prince Chaurasiya</span>
+          </a>
+        </div>
+        <div style="display: flex; gap: 16px;">
+          <a href="javascript:void(0)" style="color: #94A3B8;">LinkedIn</a>
+          <a href="javascript:void(0)" style="color: #94A3B8;">Instagram</a>
+          <a href="javascript:void(0)" style="color: #94A3B8;">Twitter (X)</a>
+          <a href="javascript:void(0)" style="color: #94A3B8;">YouTube</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Bottom Nav -->
+  <div class="mobile-bottom-nav">
+    <div class="mobile-bottom-nav-inner">
+      <a href="index.html" class="bottom-nav-item">
+        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>Home</span>
+      </a>
+      <a href="index.html#jobs-section" class="bottom-nav-item active">
+        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        <span>Internships</span>
+      </a>
+      <a href="about.html" class="bottom-nav-item">
+        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>About</span>
+      </a>
+      <a href="index.html#jobs-section" id="bottom-saved-link" class="bottom-nav-item">
+        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+        <span>Saved</span>
+        <span class="bottom-nav-badge" id="bottom-saved-badge">0</span>
+      </a>
+      <a href="javascript:void(0)" id="bottom-apps-link" class="bottom-nav-item">
+        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>My Apps</span>
+        <span class="bottom-nav-badge" id="bottom-apps-badge">0</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Reusable Modals & Toasts -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-container" id="modal-container"></div>
+  </div>
+  <div class="toast-container" id="toast-container"></div>
+
+  <!-- Scripts -->
+  <script src="js/icons.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/app.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+      const container = document.getElementById('curated-jobs-container');
+      const allJobs = window.appState.state.jobs;
+      
+      // Filter jobs for this specific page
+      let filtered = allJobs.filter(j => {
+        ${cfg.filterKey === 'location' 
+          ? `return j.location.toLowerCase().includes('${cfg.filterVal.toLowerCase()}');`
+          : `return j.category.toLowerCase().includes('${cfg.filterVal.toLowerCase()}');`
+        }
+      });
+
+      // If less than 2, pull general jobs matching opportunity type
+      if (filtered.length < 2) {
+        filtered = allJobs.filter(j => j.type === '${cfg.type}');
+      }
+
+      container.innerHTML = filtered.map(job => {
+        const isBookmarked = window.appState.isBookmarked(job.id);
+        const isJobType = job.type === 'Job';
+        const alreadyApplied = window.appState.state.applications.some(a => a.jobId === job.id);
+
+        return \`
+          <div class="job-card" data-id="\${job.id}">
+            <div class="job-card-top">
+              <span class="job-actively-hiring">
+                \${window.Icons.bolt} \${job.isActivelyHiring ? 'Actively Hiring' : 'Featured Opening'}
+              </span>
+              <span style="font-size: 12px; color: var(--text-muted); font-weight: 500;">
+                \${job.applicantsCount} applicants
+              </span>
+            </div>
+
+            <div class="job-card-header">
+              <div class="job-title-group">
+                <h3 class="job-title" onclick="window.viewJobDetails('\${job.id}')">\${job.title}</h3>
+                <div class="job-company">
+                  <span>\${job.company}</span>
+                  <span style="display:inline-block; width: 4px; height: 4px; border-radius: 50%; background: #94A3B8;"></span>
+                  <span style="color: var(--primary); font-size: 13px; font-weight: 500;">\${job.category}</span>
+                </div>
+              </div>
+
+              <div class="company-logo-box">
+                <img src="\${job.companyLogo}" alt="\${job.company}" loading="lazy" onerror="this.src='assets/logo.svg'" />
+              </div>
+            </div>
+
+            <div class="job-location-row">
+              \${window.Icons.mapPin}
+              <span>\${job.location}</span>
+            </div>
+
+            <div class="job-meta-grid">
+              <div class="meta-item">
+                <span class="meta-label">\${window.Icons.calendar} Start Date</span>
+                <span class="meta-value">\${job.startDate}</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">\${window.Icons.duration} \${isJobType ? 'Experience' : 'Duration'}</span>
+                <span class="meta-value">\${job.duration}</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">\${window.Icons.rupee} \${isJobType ? 'CTC' : 'Stipend'}</span>
+                <span class="meta-value" style="color: #0369A1;">\${job.stipend}</span>
+              </div>
+              <div class="meta-item">
+                <span class="meta-label">\${window.Icons.clock} Apply By</span>
+                <span class="meta-value">\${job.applyBy}</span>
+              </div>
+            </div>
+
+            <div class="job-tags-row">
+              <span class="tag-badge">\${job.type}</span>
+              \${job.isPPO ? '<span class="tag-badge tag-ppo">✨ Job Offer (PPO)</span>' : ''}
+              <span class="tag-badge">Certificate</span>
+              \${job.skills.slice(0, 3).map(skill => \`<span class="tag-badge">\${skill}</span>\`).join('')}
+            </div>
+
+            <div class="job-card-bottom">
+              <div class="posted-time">
+                \${window.Icons.clock}
+                <span>\${job.postedDaysAgo}</span>
+              </div>
+
+              <div class="job-card-actions">
+                <button class="btn-bookmark" onclick="window.toggleBookmark('\${job.id}')" title="Save this job">
+                  \${isBookmarked ? window.Icons.bookmarkFill : window.Icons.bookmark}
+                </button>
+
+                <button class="btn-view-details" onclick="window.viewJobDetails('\${job.id}')">
+                  View details
+                </button>
+
+                \${alreadyApplied ? \`
+                  <button class="btn btn-sm" style="background: #E2E8F0; color: #475569; cursor: default;" disabled>
+                    \${window.Icons.checkCircle} Applied
+                  </button>
+                \` : \`
+                  <button class="btn btn-primary btn-sm" onclick="window.openApplyModal('\${job.id}')">
+                    Apply Now
+                  </button>
+                \`}
+              </div>
+            </div>
+          </div>
+        \`;
+      }).join('');
+    });
+  </script>
+</body>
+</html>`;
+}
+
+pagesConfig.forEach(cfg => {
+  const filePath = path.join(__dirname, '..', cfg.filename);
+  fs.writeFileSync(filePath, generateHTML(cfg), 'utf8');
+  console.log(`Generated: ${cfg.filename}`);
+});
+
+console.log(`\nSuccessfully generated all ${pagesConfig.length} dedicated category/location pages!`);

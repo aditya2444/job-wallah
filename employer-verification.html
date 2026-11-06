@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Employer Verification &amp; Safety - Job Wallah</title>
+  <meta name="description" content="Discover how Job Wallah's 4-step employer verification protects students from scams, unpaid internships, and fraudulent job postings." />
+  
+  <link rel="icon" type="image/svg+xml" href="assets/logo.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="css/styles.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <script src="js/theme.js"></script>
+</head>
+<body>
+
+  <!-- Top Announcement Bar -->
+  <div class="top-notice-bar">
+    <span class="badge">🛡️ Zero-Scam Guarantee</span>
+    <span>All Job Wallah openings are 100% verified. No fees, no unpaid traps, no fraud!</span>
+  </div>
+
+  <!-- Navbar -->
+  <nav class="navbar">
+    <div class="container navbar-container">
+      <div style="display: flex; align-items: center; gap: 12px;">
+        <button id="hamburger-btn" class="nav-hamburger" aria-label="Open Navigation Menu">
+          <svg style="width: 24px; height: 24px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"/></svg>
+        </button>
+        <div class="nav-brand">
+          <a href="index.html">
+            <img src="assets/logo.svg" alt="Job Wallah Logo" />
+          </a>
+        </div>
+      </div>
+
+      <div class="nav-menu">
+        <a href="index.html#jobs-section" class="nav-link">Internships</a>
+        <a href="index.html#jobs-section" class="nav-link">Jobs</a>
+        <a href="about.html" class="nav-link">About Us</a>
+        <a href="careers.html" class="nav-link">We're Hiring</a>
+        <a href="employer-verification.html" class="nav-link active">Verification</a>
+        <a href="contact.html" class="nav-link">Contact</a>
+      </div>
+
+      <div class="nav-actions">
+        <a href="index.html#jobs-section" id="bookmarks-nav-btn" class="btn btn-secondary btn-sm" title="View Saved Openings">
+          <svg style="width: 16px; height: 16px; color: var(--primary);" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+          <span style="font-weight: 600;">Saved</span>
+          <span id="bookmark-count-badge" style="background: var(--primary); color: white; border-radius: 10px; padding: 1px 6px; font-size: 11px; font-weight: 700;">0</span>
+        </a>
+
+        <button id="my-apps-nav-btn" class="btn btn-secondary btn-sm" title="View Applied Status">
+          <svg style="width: 16px; height: 16px; color: #10B981;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+          <span style="font-weight: 600;">Applications</span>
+          <span id="my-apps-count-badge" style="background: #10B981; color: white; border-radius: 10px; padding: 1px 6px; font-size: 11px; font-weight: 700;">0</span>
+        </button>
+
+        
+        <!-- Theme Toggle Button -->
+        <button id="theme-toggle-btn" class="theme-toggle-btn" aria-label="Toggle theme" title="Toggle Light / Dark Mode"></button>
+        <button id="post-job-nav-btn" class="btn btn-employer btn-sm">
+          <svg style="width: 15px; height: 15px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg>
+          <span>Hire Talent</span>
+        </button>
+
+        <div id="user-profile-area" style="display: flex; gap: 8px;"></div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Drawer -->
+  <div class="mobile-drawer-overlay" id="mobile-drawer-overlay">
+    <div class="mobile-drawer">
+      <div class="drawer-header">
+        <img src="assets/logo.svg" alt="Job Wallah Logo" style="height: 32px;" />
+        <button id="close-drawer-btn" style="color: var(--text-muted); padding: 6px;">
+          <svg style="width: 22px; height: 22px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/></svg>
+        </button>
+      </div>
+      <div class="drawer-nav">
+        <a href="index.html" class="drawer-link">🏠 Home</a>
+        <a href="index.html#jobs-section" class="drawer-link">💼 Internships &amp; Jobs</a>
+        <a href="about.html" class="drawer-link">📖 About Us</a>
+        <a href="careers.html" class="drawer-link">🚀 We're Hiring</a>
+        <a href="employer-verification.html" class="drawer-link active">🛡️ Employer Verification</a>
+        <a href="contact.html" class="drawer-link">✉️ Contact Us</a>
+        
+        <button class="drawer-link drawer-theme-btn" style="text-align: left; width: 100%; display: flex; align-items: center; justify-content: space-between;">
+          <span class="drawer-theme-label">🌙 Dark Mode</span>
+          <span style="font-size: 11px; padding: 2px 8px; border-radius: 10px; background: rgba(56, 189, 248, 0.15); color: var(--primary); font-weight: 700;">Theme</span>
+        </button>
+        <div class="drawer-divider"></div>
+        <div class="drawer-section-title">My Activity</div>
+        <button id="drawer-my-apps-btn" class="drawer-link" style="text-align: left; width: 100%;">📄 My Applications</button>
+        <button id="drawer-post-job-btn" class="drawer-link" style="text-align: left; width: 100%; color: #D97706;">⚡ Post a Job (Recruiters)</button>
+        <div class="drawer-divider"></div>
+                <div class="drawer-section-title">Legal &amp; Trust</div>
+        <a href="terms.html" class="drawer-link">📜 Terms &amp; Conditions</a>
+        <a href="privacy.html" class="drawer-link">🔒 Privacy Policy</a>
+        <div class="drawer-divider"></div>
+        <div style="padding: 12px 14px; text-align: center;">
+          <a href="javascript:void(0)" onclick="window.closeDrawer(); window.openCreatorModal()" class="designer-credit-badge" style="width: 100%; justify-content: center;">
+            <svg style="width: 15px; height: 15px;" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/></svg>
+            <span>Made by Prince Chaurasiya</span>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Page Hero -->
+  <header class="page-hero">
+    <div class="container">
+      <div class="page-hero-badge">
+        <span>🛡️ TRUST, SAFETY &amp; VERIFICATION PROTOCOL</span>
+      </div>
+      <h1 class="page-hero-title">Safe, Verified &amp; Scam-Free Careers</h1>
+      <p class="page-hero-subtitle">
+        How Job Wallah protects millions of students from fraudulent recruiters, fake offers, and unpaid traps through our rigorous 4-step employer verification.
+      </p>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main style="padding: 40px 0 60px 0;">
+    <div class="container">
+      <div class="breadcrumb-nav">
+        <a href="index.html">Home</a>
+        <span>/</span>
+        <span style="color: var(--navy); font-weight: 600;">Employer Verification</span>
+      </div>
+
+      <!-- Trust Overview Card -->
+      <section class="content-card">
+        <h2>The Job Wallah Verification Shield</h2>
+        <p>
+          Students often encounter online job portals infested with counterfeit listings, identity theft, or deceptive "training programs" that ask candidates to pay money upfront.
+        </p>
+        <p>
+          At <strong>Job Wallah</strong>, student safety is our highest priority. Before any company or HR representative is permitted to publish an opening or review student resumes, they must successfully pass our comprehensive <strong>4-Step Verification Protocol</strong>.
+        </p>
+      </section>
+
+      <!-- 4-Step Verification Grid -->
+      <section class="content-card">
+        <h2>Our 4-Step Verification Process</h2>
+        <div style="display: flex; flex-direction: column; gap: 20px; margin-top: 24px;">
+          
+          <!-- Step 1 -->
+          <div style="display: flex; gap: 20px; background: #F8FAFC; border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 24px; align-items: flex-start;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; flex-shrink: 0;">
+              1
+            </div>
+            <div>
+              <h3 style="font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 6px;">Government Registration Cross-Check (GSTIN / CIN)</h3>
+              <p style="font-size: 14.5px; color: var(--text-secondary); line-height: 1.6; margin: 0;">
+                We cross-reference every organization's Goods &amp; Services Tax Identification Number (GSTIN) or Corporate Identification Number (CIN) directly with the Ministry of Corporate Affairs (MCA) database. Unregistered sole proprietorships or shell entities cannot post corporate roles.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 2 -->
+          <div style="display: flex; gap: 20px; background: #F8FAFC; border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 24px; align-items: flex-start;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; flex-shrink: 0;">
+              2
+            </div>
+            <div>
+              <h3 style="font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 6px;">Official Corporate Domain Authentication</h3>
+              <p style="font-size: 14.5px; color: var(--text-secondary); line-height: 1.6; margin: 0;">
+                Recruiters must register using their official company domain email (e.g. <code>recruiter@razorpay.com</code> or <code>hr@swiggy.in</code>). Generic free email accounts (Gmail, Yahoo, Outlook) are strictly rejected for enterprise job postings.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 3 -->
+          <div style="display: flex; gap: 20px; background: #F8FAFC; border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 24px; align-items: flex-start;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; flex-shrink: 0;">
+              3
+            </div>
+            <div>
+              <h3 style="font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 6px;">Fair Pay &amp; Stipend Guarantee Policy</h3>
+              <p style="font-size: 14.5px; color: var(--text-secondary); line-height: 1.6; margin: 0;">
+                Job Wallah enforces a strict <strong>No Unpaid Internships</strong> rule. Employers must commit in writing to the agreed stipend range, start date, and certification perks before listings go live.
+              </p>
+            </div>
+          </div>
+
+          <!-- Step 4 -->
+          <div style="display: flex; gap: 20px; background: #F8FAFC; border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 24px; align-items: flex-start;">
+            <div style="width: 48px; height: 48px; border-radius: 50%; background: var(--primary); color: white; display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; flex-shrink: 0;">
+              4
+            </div>
+            <div>
+              <h3 style="font-size: 18px; font-weight: 700; color: var(--navy); margin-bottom: 6px;">Recruiter Phone &amp; Identity Verification</h3>
+              <p style="font-size: 14.5px; color: var(--text-secondary); line-height: 1.6; margin: 0;">
+                Our Trust &amp; Safety team conducts telephonic screening calls with the hiring team, reviews public LinkedIn executive profiles, and validates physical office presence before awarding the <strong>⚡ Verified Recruiter Badge</strong>.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+      <!-- Zero-Tolerance Anti-Scam Rules -->
+      <section class="content-card" style="border-left: 5px solid var(--danger);">
+        <h2 style="color: var(--danger);">Strict Zero-Tolerance Anti-Scam Policies</h2>
+        <p>If an employer ever requests any of the following, they are in direct violation of Job Wallah terms:</p>
+        <ul style="padding-left: 20px; font-size: 14.5px; color: var(--text-secondary); line-height: 1.8;">
+          <li>❌ <strong>Asking for Security Deposits:</strong> Demanding money for "laptops", "security clearance", or "uniforms".</li>
+          <li>❌ <strong>Charging Training or Registration Fees:</strong> Forcing students to buy a course before giving an internship offer.</li>
+          <li>❌ <strong>Telegram / Crypto Task Scams:</strong> Offering money for liking YouTube videos or completing unauthorized financial transfers.</li>
+        </ul>
+        <p style="margin-top: 14px;">
+          Any employer found violating these guidelines is immediately <strong>permanently banned</strong>, and their incident report is submitted to the <strong>National Cyber Crime Reporting Portal (cybercrime.gov.in)</strong>.
+        </p>
+      </section>
+
+      <!-- Whistleblower & Support Section -->
+      <section style="background: #FFFFFF; border: 1px solid var(--border-color); border-radius: var(--radius-lg); padding: 32px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px;">
+        <div>
+          <h3 style="font-size: 19px; font-weight: 800; color: var(--navy); margin-bottom: 6px;">Notice anything suspicious?</h3>
+          <p style="font-size: 14px; color: var(--text-secondary); margin: 0;">
+            Report any suspicious recruiter interaction directly to our 24/7 Student Safety Taskforce.
+          </p>
+        </div>
+        <a href="contact.html" class="btn btn-primary" style="background: var(--danger); border-color: var(--danger);">
+          Report Suspicious Employer 🚨
+        </a>
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-columns">
+        <div class="footer-col">
+          <h5>Internships by Places</h5>
+          <ul class="footer-links">
+            <li><a href="internships-work-from-home.html">Work from home</a></li>
+            <li><a href="internships-delhi-ncr.html">Delhi NCR</a></li>
+            <li><a href="internships-bengaluru.html">Bengaluru</a></li>
+            <li><a href="internships-mumbai.html">Mumbai</a></li>
+            <li><a href="internships-hyderabad.html">Hyderabad</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Internships by Stream</h5>
+          <ul class="footer-links">
+            <li><a href="internships-web-development.html">Web Development</a></li>
+            <li><a href="internships-data-science.html">Data Science</a></li>
+            <li><a href="internships-graphic-design.html">Graphic Design</a></li>
+            <li><a href="internships-digital-marketing.html">Digital Marketing</a></li>
+            <li><a href="internships-finance.html">Finance &amp; Accounts</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>Jobs by Stream</h5>
+          <ul class="footer-links">
+            <li><a href="jobs-full-time-tech.html">Full-Time Tech Jobs</a></li>
+            <li><a href="jobs-associate-product-manager.html">Associate Product Manager</a></li>
+            <li><a href="jobs-sales-business-development.html">Sales &amp; Business Development</a></li>
+            <li><a href="jobs-operations-hr.html">Operations &amp; HR Trainee</a></li>
+            <li><a href="jobs-cyber-security.html">Cyber Security Trainee</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h5>About Job Wallah</h5>
+          <ul class="footer-links">
+            <li><a href="about.html">About Us</a></li>
+            <li><a href="careers.html">We're hiring</a></li>
+            <li><a href="employer-verification.html">Employer Verification</a></li>
+            <li><a href="terms.html">Terms &amp; Conditions</a></li>
+            <li><a href="privacy.html">Privacy Policy</a></li>
+            <li><a href="contact.html">Contact Us</a></li>
+          </ul>
+        </div>
+      </div>
+            <div class="footer-bottom">
+        <div>
+          &copy; 2026 Job Wallah Technologies Pvt. Ltd. All rights reserved.
+        </div>
+        <div>
+          <a href="javascript:void(0)" onclick="window.openCreatorModal()" class="designer-credit-badge" title="Creator of Job Wallah">
+            <svg style="width: 15px; height: 15px;" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z" clip-rule="evenodd"/></svg>
+            <span>Designed &amp; Made by Prince Chaurasiya</span>
+          </a>
+        </div>
+        <div style="display: flex; gap: 16px;">
+          <a href="javascript:void(0)" style="color: #94A3B8;">LinkedIn</a>
+          <a href="javascript:void(0)" style="color: #94A3B8;">Instagram</a>
+          <a href="javascript:void(0)" style="color: #94A3B8;">Twitter (X)</a>
+          <a href="javascript:void(0)" style="color: #94A3B8;">YouTube</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Mobile Bottom Nav -->
+  <div class="mobile-bottom-nav">
+    <div class="mobile-bottom-nav-inner">
+      <a href="index.html" class="bottom-nav-item">
+        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"/></svg>
+        <span>Home</span>
+      </a>
+      <a href="index.html#jobs-section" class="bottom-nav-item">
+        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 13.255A23.931 23.931 0 0112 15c-3.183 0-6.22-.62-9-1.745M16 6V4a2 2 0 00-2-2h-4a2 2 0 00-2 2v2m4 6h.01M5 20h14a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"/></svg>
+        <span>Internships</span>
+      </a>
+      <a href="employer-verification.html" class="bottom-nav-item active">
+        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/></svg>
+        <span>Safety</span>
+      </a>
+      <a href="index.html#jobs-section" id="bottom-saved-link" class="bottom-nav-item">
+        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/></svg>
+        <span>Saved</span>
+        <span class="bottom-nav-badge" id="bottom-saved-badge">0</span>
+      </a>
+      <a href="javascript:void(0)" id="bottom-apps-link" class="bottom-nav-item">
+        <svg style="width: 20px; height: 20px;" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/></svg>
+        <span>My Apps</span>
+        <span class="bottom-nav-badge" id="bottom-apps-badge">0</span>
+      </a>
+    </div>
+  </div>
+
+  <!-- Reusable Modals & Toasts -->
+  <div class="modal-overlay" id="modal-overlay">
+    <div class="modal-container" id="modal-container"></div>
+  </div>
+  <div class="toast-container" id="toast-container"></div>
+
+  <script src="js/icons.js"></script>
+  <script src="js/data.js"></script>
+  <script src="js/state.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
