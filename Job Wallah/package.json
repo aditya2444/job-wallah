@@ -1,0 +1,19 @@
+{
+  "name": "job-wallah",
+  "version": "1.0.0",
+  "description": "Internshala-inspired job & internship platform tailored for Indian students and freshers",
+  "main": "server.js",
+  "scripts": {
+    "build": "echo 'Static assets ready'",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "internshala",
+    "jobs",
+    "internships",
+    "job-wallah",
+    "careers"
+  ],
+  "author": "",
+  "license": "ISC"
+}
